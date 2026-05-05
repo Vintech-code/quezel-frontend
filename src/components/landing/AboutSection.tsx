@@ -1,0 +1,58 @@
+import { motion } from "framer-motion"
+
+export default function AboutSection() {
+  return (
+    <section id="about" className="px-6 py-32 bg-(--cream-white) relative overflow-hidden">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-[1fr_1.2fr]">
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          <div className="aspect-[4/5] rounded-[2rem] bg-(--parchment) border border-border shadow-diffuse-lg relative z-10 flex items-center justify-center overflow-hidden">
+             {/* Decorative placeholder for a real image */}
+             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-80 mix-blend-multiply filter grayscale-[30%] sepia-[20%]" />
+             <div className="absolute inset-0 bg-linear-to-t from-(--dark-espresso)/60 to-transparent" />
+             <h3 className="relative z-20 font-display text-4xl text-(--cream-white) p-8 self-end font-medium">Since 2026</h3>
+          </div>
+          <div className="absolute -bottom-8 -right-8 h-48 w-48 rounded-full bg-(--soft-gold) opacity-20 blur-3xl" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <p className="font-subheading text-sm uppercase tracking-[0.3em] font-semibold text-(--coffee-brown)">
+            Our Story
+          </p>
+          <h2 className="mt-4 font-display text-4xl md:text-5xl text-(--dark-espresso) leading-tight">
+            More than a cafe. <br /> A community hub.
+          </h2>
+          <div className="mt-8 space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              Quezel's began with a simple idea: combine the warmth of a local neighborhood cafe with the seamless convenience of modern dining tech. 
+            </p>
+            <p>
+              Whether you're ordering your morning flat white on the go, or sitting down for a relaxing Sunday brunch, our integrated POS and ordering hub ensures your experience is smooth, personal, and unforgettable. We source our beans ethically and craft our meals with heart.
+            </p>
+          </div>
+          
+          <div className="mt-12 grid grid-cols-2 gap-8">
+            <div className="border-l-2 border-(--soft-gold) pl-6">
+              <p className="font-display text-3xl text-(--dark-espresso)">100%</p>
+              <p className="text-sm text-muted-foreground mt-2 font-medium uppercase tracking-widest">Local Beans</p>
+            </div>
+            <div className="border-l-2 border-(--soft-gold) pl-6">
+              <p className="font-display text-3xl text-(--dark-espresso)">Fast</p>
+              <p className="text-sm text-muted-foreground mt-2 font-medium uppercase tracking-widest">Smart Ordering</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}

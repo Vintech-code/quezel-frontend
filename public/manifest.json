@@ -1,0 +1,20 @@
+{
+  "name": "Quezel Cafe Hub",
+  "short_name": "Quezel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e8f9fd",
+  "theme_color": "#ff1e00",
+  "icons": [
+    {
+      "src": "/assets/logo11_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logo22_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
