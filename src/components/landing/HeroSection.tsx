@@ -1,6 +1,8 @@
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import { Coffee, IceCream, Popcorn, Soup, Utensils } from "lucide-react"
 import heroImage from "@/assets/logo1.png"
+import useScrollDirection from "@/hooks/use-scroll-direction"
 
 const categoryChips = [
   { label: "Dishes", icon: Utensils, offset: 0, position: "-right-2 top-4" },
@@ -11,12 +13,20 @@ const categoryChips = [
 ]
 
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isInView = useInView(sectionRef, { margin: "-100px" })
+  const scrollDirection = useScrollDirection()
+  const shouldShow = isInView || scrollDirection === "up"
+
   return (
-    <section className="relative overflow-hidden px-6 pb-20 pt-4 md:pt-14 min-h-[90vh] flex items-center bg-(--warm-beige)">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden px-6 pb-20 pt-4 md:pt-14 min-h-[90vh] flex items-center bg-(--warm-beige)"
+    >
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={shouldShow ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="font-subheading mb-4 text-sm uppercase tracking-[0.3em] font-semibold text-(--coffee-brown)">
@@ -32,23 +42,25 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="rounded-full bg-(--dark-espresso) px-8 py-4 text-sm font-semibold text-(--cream-white) shadow-diffuse-lg hover:opacity-90 transition-all"
+              className="rounded-full bg-(--dark-espresso) px-8 py-4 text-sm font-semibold text-(--cream-white) shadow-diffuse-sm hover:opacity-90 transition-all"
             >
               Order Now
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="rounded-full border border-(--coffee-brown) px-8 py-4 text-sm font-semibold text-(--dark-espresso) hover:bg-(--parchment) transition-all"
-            >
-              Explore Menu
-            </motion.button>
+            <a href="#menu">
+  <motion.button
+    whileHover={{ scale: 1.02, y: -2 }}
+    whileTap={{ scale: 0.98 }}
+    className="rounded-full border border-(--coffee-brown) px-8 py-4 text-sm font-semibold text-(--dark-espresso) hover:bg-(--parchment) transition-all"
+  >
+    Explore Menu
+  </motion.button>
+</a>
           </div>
         </motion.div>
         
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={shouldShow ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="relative w-full max-w-lg mx-auto lg:max-w-none"
         >

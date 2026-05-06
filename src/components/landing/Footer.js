@@ -1,4 +1,0 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-export default function Footer() {
-    return (_jsx("footer", { className: "border-t hairline-gold px-6 py-12", children: _jsxs("div", { className: "mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 text-sm", children: [_jsxs("div", { children: [_jsx("p", { className: "font-display text-lg", children: "Quezel" }), _jsx("p", { className: "text-muted-foreground", children: "Slow coffee lounge" })] }), _jsxs("div", { className: "flex items-center gap-4 text-muted-foreground", children: [_jsx("span", { children: "Instagram" }), _jsx("span", { children: "Spotify" }), _jsx("span", { children: "Journal" })] }), _jsx("p", { className: "text-muted-foreground", children: "\u00A9 2026 Quezel. All rights reserved." })] }) }));
-}

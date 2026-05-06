@@ -1,10 +1,11 @@
 import { useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { Link } from "react-router-dom"
 import menuItem1 from "@/assets/1.png"
 import menuItem2 from "@/assets/2.png"
 import menuItem3 from "@/assets/3.png"
 import menuItem4 from "@/assets/4.png"
+import useScrollDirection from "@/hooks/use-scroll-direction"
 
 const items = [
   {
@@ -42,6 +43,10 @@ const items = [
 ]
 
 export default function MenuSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isInView = useInView(sectionRef, { margin: "-100px" })
+  const scrollDirection = useScrollDirection()
+  const shouldShow = isInView || scrollDirection === "up"
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const handleScroll = (offset: number) => {
@@ -52,14 +57,13 @@ export default function MenuSection() {
   }
 
   return (
-    <section id="menu" className="px-6 py-32 bg-(--warm-beige)">
+    <section id="menu" ref={sectionRef} className="px-6 py-32 bg-(--warm-beige)">
       <div className="mx-auto max-w-6xl">
 
         {/* HEADER */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
           <div>
@@ -135,8 +139,7 @@ export default function MenuSection() {
               <motion.div
                 key={item.name}
                 initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ 
                   y: -8, 

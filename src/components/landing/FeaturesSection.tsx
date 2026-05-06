@@ -1,5 +1,7 @@
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import { Coffee, Smartphone, CreditCard, Utensils } from "lucide-react"
+import useScrollDirection from "@/hooks/use-scroll-direction"
 
 const features = [
   {
@@ -25,13 +27,17 @@ const features = [
 ]
 
 export default function FeaturesSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isInView = useInView(sectionRef, { margin: "-100px" })
+  const scrollDirection = useScrollDirection()
+  const shouldShow = isInView || scrollDirection === "up"
+
   return (
-    <section className="px-6 py-24 bg-(--parchment)">
+    <section ref={sectionRef} className="px-6 py-24 bg-(--parchment)">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
@@ -46,8 +52,7 @@ export default function FeaturesSection() {
             <motion.div
               key={feature.title}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
               className="p-8 rounded-2xl bg-(--cream-white) border border-(--border) shadow-diffuse flex flex-col items-start gap-4"

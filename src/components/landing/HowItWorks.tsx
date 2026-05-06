@@ -1,4 +1,6 @@
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import useScrollDirection from "@/hooks/use-scroll-direction"
 
 const steps = [
   {
@@ -37,18 +39,25 @@ const itemVariants = {
 }
 
 export default function HowItWorks() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isInView = useInView(sectionRef, { margin: "-100px" })
+  const scrollDirection = useScrollDirection()
+  const shouldShow = isInView || scrollDirection === "up"
+
   return (
-    <section id="how" className="px-6 py-32 bg-(--warm-beige)">
+    <section id="how" ref={sectionRef} className="px-6 py-32 bg-(--warm-beige)">
       <div className="mx-auto max-w-6xl">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <motion.p 
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            initial={{ opacity: 0 }}
+            animate={shouldShow ? { opacity: 1 } : { opacity: 0 }}
             className="font-subheading text-sm uppercase tracking-[0.3em] font-semibold text-(--coffee-brown)"
           >
             Simple & Fast
           </motion.p>
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             className="mt-4 font-display text-4xl text-(--dark-espresso)"
           >
             How Quezel's Works
@@ -58,15 +67,14 @@ export default function HowItWorks() {
         <motion.div 
           variants={containerVariants}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={shouldShow ? "show" : "hidden"}
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 relative"
         >
           {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[52px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-transparent via-(--soft-gold) to-transparent opacity-30" />
+          <div className="hidden lg:block absolute top-13 left-[12%] right-[12%] h-0.5 bg-linear-to-r from-transparent via-(--soft-gold) to-transparent opacity-30" />
 
-          {steps.map((step, index) => (
-            <motion.div 
+          {steps.map((step) => (
+            <motion.div   
               key={step.title} 
               variants={itemVariants}
               whileHover={{ y: -5 }}

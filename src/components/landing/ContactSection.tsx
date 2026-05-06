@@ -1,8 +1,21 @@
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import useScrollDirection from "@/hooks/use-scroll-direction"
+
 export default function ContactSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const isInView = useInView(sectionRef, { margin: "-100px" })
+  const scrollDirection = useScrollDirection()
+  const shouldShow = isInView || scrollDirection === "up"
+
   return (
-    <section id="contact" className="px-6 py-20">
+    <section id="contact" ref={sectionRef} className="px-6 py-20">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={shouldShow ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+          transition={{ duration: 0.6 }}
+        >
           <p className="text-sm uppercase tracking-[0.3em] text-(--coffee-brown)">
             Reserve a table
           </p>
@@ -16,8 +29,14 @@ export default function ContactSection() {
             <p>roxasjequejhon96@gmail.com</p>
             <p>0945 548 3190</p>
           </div>
-        </div>
-        <form className="rounded-[28px] border border-border bg-(--cream-white) p-8 drop-shadow-lg">
+        </motion.div>
+
+        <motion.form
+          initial={{ opacity: 0, x: 24 }}
+          animate={shouldShow ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="rounded-[28px] border border-border bg-(--cream-white) p-8 drop-shadow-lg"
+        >
           <div className="grid gap-4">
             <input
               className="w-full rounded-xl border border-border bg-transparent px-4 py-3 text-sm"
@@ -42,8 +61,8 @@ export default function ContactSection() {
               Send request
             </button>
           </div>
-        </form>
+        </motion.form>
       </div>
     </section>
-  );
+  )
 }
