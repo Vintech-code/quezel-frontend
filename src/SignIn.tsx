@@ -1,7 +1,27 @@
+import { useState, type FormEvent } from "react"
 import logo from "@/assets/logo3.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "@/lib/AuthContext"
 
 export default function SignInPage() {
+  const navigate = useNavigate()
+  const { signIn, authError } = useAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const role = signIn(email, password)
+
+    if (role === "admin") {
+      navigate("/admin/dashboard", { replace: true })
+    }
+
+    if (role === "user") {
+      navigate("/user/dashboard", { replace: true })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-(--warm-beige) text-(--dark-espresso)">
       <header className="border-b">
@@ -36,23 +56,39 @@ export default function SignInPage() {
                 Create an account
               </Link>
             </p>
-            <form className="mt-6 grid gap-3">
+            <form className="mt-6 grid gap-3" onSubmit={handleSubmit}>
               <input
                 className="w-full rounded-xl border border-border bg-transparent px-4 py-2.5 text-sm"
                 placeholder="Email address"
                 type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
               />
               <input
                 className="w-full rounded-xl border border-border bg-transparent px-4 py-2.5 text-sm"
                 placeholder="Password"
                 type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                autoComplete="current-password"
               />
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p>Admin access: admin@quezel.com / QuezelAdmin2025</p>
+                <p>User access: clark@gmail.com / 123456789</p>
+              </div>
+              {authError?.type === "invalid_credentials" && (
+                <p className="text-xs font-semibold text-red-600">{authError.message}</p>
+              )}
               <div className="text-right">
                 <Link to="/auth/forgot-password" className="text-xs font-semibold text-(--coffee-brown)">
                   Forgot password?
                 </Link>
               </div>
-              <button className="rounded-full bg-(--coffee-brown) px-6 py-3 text-xs font-semibold uppercase tracking-wider text-(--cream-white) shadow-diffuse hover:opacity-90">
+              <button
+                type="submit"
+                className="rounded-full bg-(--coffee-brown) px-6 py-3 text-xs font-semibold uppercase tracking-wider text-(--cream-white) shadow-diffuse hover:opacity-90"
+              >
                 Sign In
               </button>
             </form>

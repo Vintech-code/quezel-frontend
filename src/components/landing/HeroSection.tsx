@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion"
 import { Coffee, IceCream, Popcorn, Soup, Utensils } from "lucide-react"
 import heroImage from "@/assets/logo1.png"
 import useScrollDirection from "@/hooks/use-scroll-direction"
+import { Link } from "react-router-dom"
 
 const categoryChips = [
   { label: "Dishes", icon: Utensils, offset: 0, position: "-right-2 top-4" },
@@ -33,19 +34,21 @@ export default function HeroSection() {
             Quezel's Cafe Hub
           </p>
           <h1 className="font-hero text-5xl leading-tight md:text-7xl text-(--dark-espresso)">
-            A seamless blend of modern flavor & local charm.
+            BITE with SMILE & DRINK with Freshness
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
             Order your favorite artisanal coffee, breakfast, and halo-halo effortlessly. Experience our cozy lounge or grab flavor on the go with our smart ordering system.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <motion.button
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="rounded-full bg-(--dark-espresso) px-8 py-4 text-sm font-semibold text-(--cream-white) shadow-diffuse-sm hover:opacity-90 transition-all"
-            >
-              Order Now
-            </motion.button>
+            <Link to="/auth/sign-in">
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-full bg-(--dark-espresso) px-8 py-4 text-sm font-semibold text-(--cream-white) shadow-diffuse-sm hover:opacity-90 transition-all"
+              >
+                Order Now
+              </motion.button>
+            </Link>
             <a href="#menu">
   <motion.button
     whileHover={{ scale: 1.02, y: -2 }}

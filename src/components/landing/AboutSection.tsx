@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import menuItem1 from "@/assets/1.png"
-import menuItem2 from "@/assets/2.png"
-import menuItem3 from "@/assets/3.png"
-import menuItem4 from "@/assets/4.png"
+import aboutPhoto1 from "@/assets/pic1.jpg"
+import aboutPhoto2 from "@/assets/pic2.jpg"
+import aboutPhoto3 from "@/assets/pic3.jpg"
+import aboutPhoto4 from "@/assets/pic4.jpg"
+import aboutPhoto5 from "@/assets/pic5.jpg"
+import aboutPhoto6 from "@/assets/pic6.jpg"
 import useScrollDirection from "@/hooks/use-scroll-direction"
 
 const aboutImages = [
-  { src: menuItem1, alt: "Halo-halo large with toppings" },
-  { src: menuItem2, alt: "Halo-halo medium in cup" },
-  { src: menuItem3, alt: "Crema de leche with toppings" },
-  { src: menuItem4, alt: "Mais con yelo with toppings" },
+  { src: aboutPhoto1, alt: "Quezel's pop-up booth at night" },
+  { src: aboutPhoto2, alt: "Community group at the Quezel's booth" },
+  { src: aboutPhoto3, alt: "Team members at the booth" },
+  { src: aboutPhoto4, alt: "Customer enjoying halo-halo" },
+  { src: aboutPhoto5, alt: "Serving area with halo-halo cups" },
+  { src: aboutPhoto6, alt: "Friends enjoying halo-halo together" },
 ]
 
 export default function AboutSection() {
@@ -70,9 +74,25 @@ export default function AboutSection() {
               })}
               <div className="absolute inset-0 bg-linear-to-t from-(--dark-espresso)/60 to-transparent" />
             </div>
-            <h3 className="relative z-20 font-display text-4xl text-(--cream-white) p-8 self-end font-medium">Since 2026</h3>
+            <h3 className="relative z-20 font-display text-4xl text-(--cream-white) p-8 self-end font-medium">Since 2025</h3>
           </div>
           <div className="absolute -bottom-8 -right-8 h-48 w-48 rounded-full bg-(--soft-gold) opacity-20 blur-3xl" />
+          <div className="mt-6 flex justify-center gap-2">
+            {aboutImages.map((image, index) => (
+              <button
+                key={image.alt}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`h-2.5 w-2.5 rounded-full border border-(--soft-gold) transition-all duration-300 ${
+                  index === activeIndex
+                    ? "bg-(--soft-gold) scale-110"
+                    : "bg-transparent opacity-60 hover:opacity-100"
+                }`}
+                aria-label={`Show photo ${index + 1}`}
+                aria-pressed={index === activeIndex}
+              />
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
@@ -88,11 +108,15 @@ export default function AboutSection() {
           </h2>
           <div className="mt-8 space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
-              Quezel's began with a simple idea: combine the warmth of a local neighborhood cafe with the seamless convenience of modern dining tech. 
+              Quezel’s started with a simple idea inspired by the hot weather — to create refreshing treats that people could enjoy and cool down with. What began with halo-halo soon expanded into customer favorites like Mais Con Yelo and Crema de Leche.
             </p>
             <p>
-              Whether you're ordering your morning flat white on the go, or sitting down for a relaxing Sunday brunch, our integrated POS and ordering hub ensures your experience is smooth, personal, and unforgettable. We source our beans ethically and craft our meals with heart.
+              As Quezel’s grew, the founders realized people also loved affordable snacks and combo meals, leading to the addition of burgers, fries, and hotdog sandwiches to the menu.
             </p>
+            <p>
+              The name “Quezel’s” comes from the combination of the founders’ names, Jeque Jhon Roxas and Hazel Ann Cababaros — representing their passion, partnership, and shared dream of serving the community with food made from the heart.
+            </p>
+
           </div>
           
           <div className="mt-12 grid grid-cols-2 gap-8">

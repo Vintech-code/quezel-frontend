@@ -10,6 +10,7 @@ type AuthError = {
 type ProtectedRouteProps = {
   fallback?: ReactNode
   unauthenticatedElement: ReactNode
+  requiredRole?: "admin" | "user"
 }
 
 const DefaultFallback = () => (
@@ -21,6 +22,7 @@ const DefaultFallback = () => (
 export default function ProtectedRoute({
   fallback = <DefaultFallback />,
   unauthenticatedElement,
+  requiredRole,
 }: ProtectedRouteProps) {
   const {
     isAuthenticated,
@@ -28,6 +30,7 @@ export default function ProtectedRoute({
     authChecked,
     authError,
     checkUserAuth,
+    userRole,
   } = useAuth()
 
   useEffect(() => {
@@ -51,6 +54,10 @@ export default function ProtectedRoute({
   }
 
   if (!isAuthenticated) {
+    return <>{unauthenticatedElement}</>
+  }
+
+  if (requiredRole && userRole !== requiredRole) {
     return <>{unauthenticatedElement}</>
   }
 
